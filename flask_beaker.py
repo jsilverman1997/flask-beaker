@@ -8,7 +8,7 @@
     :license: MIT, see LICENSE for more details.
 '''
 
-__version__ = '0.2.0'
+__version__ = '0.2.1'
 try:
     from beaker.middleware import SessionMiddleware
 except ImportError, e:
