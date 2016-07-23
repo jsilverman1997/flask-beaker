@@ -25,11 +25,11 @@ class BeakerSessionInterface(SessionInterface):
         session.save()
 
 class BeakerSession(object):
-    def __init__(self, app=None):
+    def __init__(self, app=None, data_dir='/tmp/session/data', lock_dir='/tmp/session/lock'):
         if app is not None:
-            self.init_app(app)
+            self.init_app(app, data_dir, lock_dir)
     
-    def init_app(self, app):
+    def init_app(self, app, data_dir, lock_dir):
         '''Initalizes the application with the extension.
         
         :param app: The Flask application object.
@@ -37,8 +37,8 @@ class BeakerSession(object):
         self.app = app
         self._session_conf = app.config.get('BEAKER_SESSION', {
             'session.type': 'file',
-            'session.data_dir': '/tmp/session/data',
-            'session.lock_dir': '/tmp/session/lock'
+            'session.data_dir': data_dir,
+            'session.lock_dir': lock_dir
         })
         app.wsgi_app = SessionMiddleware(app.wsgi_app, self._session_conf)
         app.session_interface = BeakerSessionInterface()
